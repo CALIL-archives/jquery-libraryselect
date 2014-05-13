@@ -12,11 +12,16 @@
         <!-- X-editable -->
         <link href="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-        <script src="js/jquery-librarysystempicker.js"></script>
+        <script src="js/jquery-libraryselect.js"></script>
+        <style>
+            body {
+                padding : 10px 30px;
+            }
+        </style>
         <script>
         $(document).ready(function () {
             $.fn.editable.defaults.emptytext = '未記入';
-//            $.fn.editable.defaults.onblur = 'submit';
+            $.fn.editable.defaults.onblur = 'submit';
 //            $.fn.editable.defaults.url = '/preference/post';
             $('#account_name').editable({type: 'text',pk:0});
             $('#own_systemid').editable({type: 'text', mode: 'inline',pk:0});
@@ -25,19 +30,27 @@
 //            $(document).on('change keydown', '.editable-input input', function(){
 //                console.log($(this).val());
 //            });
-            $('.editable-input input').librarysystempicker(function(){
-                console.log($('.editable-input input').val());
+            $('#sample_textbox').librarysystempicker(function(system_id){
+                $('#sample_textbox').val(system_id)
+            });
+            $('.editable-input input').librarysystempicker(function(system_id){
+                $('.editable-input input').val(system_id)
             });
         });
         </script>
     </head>
     <body>
         <h1>Library System Picker</h1>
+        <h2>textbox sample</h2>
         <p>
-            <a href="#" id="account_name" data-params="{csrfmiddlewaretoken:'ovy5xJS0PV8CVjEFTbz15nGxqNPctvXc'}">カーリル図書館</a>
+            <input type="text" name="sample_textbox" id="sample_textbox" class="form-control input-sm" />
         </p>
+        <h2>X-editable Sample</h2>
         <p>
-            <a href="#" id="own_systemid" data-params="{csrfmiddlewaretoken:'ovy5xJS0PV8CVjEFTbz15nGxqNPctvXc'}">Gifu_Nakatsugawa</a>
+            <a href="#" id="account_name" data-params="{csrfmiddlewaretoken:'ovy5xJS0PV8CVjEFTbz15nGxqNPctvXc'}" data-title="図書館を検索して選択して下さい。">カーリル図書館</a>
         </p>
+        <div>
+            <input type="text" name="libraryselect_search" id="libraryselect_search" class="form-control input-sm" />
+        </div>
     </body>
 </html>
