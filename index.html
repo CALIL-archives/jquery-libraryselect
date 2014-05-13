@@ -15,12 +15,11 @@
         <script src="js/jquery-librarysystempicker.js"></script>
         <script>
         $(document).ready(function () {
-            $.fn.editable.defaults.mode = 'inline';
             $.fn.editable.defaults.emptytext = '未記入';
 //            $.fn.editable.defaults.onblur = 'submit';
 //            $.fn.editable.defaults.url = '/preference/post';
             $('#account_name').editable({type: 'text',pk:0});
-            $('#own_systemid').editable({type: 'text',pk:0});
+            $('#own_systemid').editable({type: 'text', mode: 'inline',pk:0});
         });
         $(function(){
 //            $(document).on('change keydown', '.editable-input input', function(){

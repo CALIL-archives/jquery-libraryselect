@@ -2,7 +2,7 @@
   $.fn.librarysystempicker = (func)->
     $element = this
     move = false
-    $(document).on('change keydown', this, ->
+    $(document).on('change keyup', this, ->
         func()
     )
     return this
