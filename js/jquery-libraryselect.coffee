@@ -1,33 +1,35 @@
 (($) ->
-  $.fn.librarysystempicker = (func)->
+  $.fn.librarysystempicker = (options)->
     $element = this
-    move = false
+    default_options = {
+        'font-size': '12px'
+        'keyword'  : false
+        'selector' : $element.selector
+        'label'    : false
+        'onselect' : (system_id)->
+            $($element.selector).val(system_id)
+    }
+    options = $.extend(default_options, options)
     log = (obj) ->
         try
             console.log obj
-    addCSS = (code)->
+    add_css = (css_code)->
         #CSSノード追加
         newStyle = document.createElement('style')
         newStyle.type = "text/css"
-        document.getElementsByTagName('head').item(0).appendChild(newStyle)
-        css = document.styleSheets.item(0)
-        if document.styleSheets[0].cssRules
-            idx = document.styleSheets[0].cssRules.length
-        else
-            idx = 0
+        document.getElementsByTagName('head')[0].appendChild(newStyle)
+        newStyle.innerHTML = css_code
+#        css = document.styleSheets[0]
+#        if document.styleSheets[0].cssRules
+#            idx = document.styleSheets[0].cssRules.length
+#        else
+#            idx = 0
         #追加
-        css.insertRule(code, 0) #末尾に追加
+#        css.insertRule(css_code, 0) #末尾に追加
       # APIを叩く
       get_api = (param, func)->
         if param.type? and param.type=='search'
           url = "//api.calil.jp/mobile/search"
-        else if param.type? and param.type=='group'
-          url = "//api.calil.jp/mobile/group"
-          # キャッシュがあれば使う
-          if @get_groups(param.id)
-            return func(@get_groups(param.id))
-        else
-          url = "//api.calil.jp/mobile/recommend"
         $.ajax
           url: url
           type: "GET"
@@ -35,15 +37,15 @@
           dataType: "jsonp"
           timeout: 5000
           error: ()->
-            alert('読み込みに失敗しました。')
+            log('読み込みに失敗しました。')
           success: (data) =>
             if param.type? and param.type=='group'
               @add_groups(param.id, data)
             func(data)
 
-    addCSS("""
+    add_css("""
 #library_select_div {
-    //display: none;
+    display: none;
     height: 252px;
     overflow:auto;
     position: absolute;
@@ -53,13 +55,10 @@
     padding: 0;
     margin: 0;
 }
-""")
-    addCSS("""
 #library_select_div div {
+    font-size: 12px;
     padding: 10px;
 }
-""")
-    addCSS("""
 #library_select_div div:hover {
     background-color: #CCC;
 }
@@ -67,8 +66,7 @@
     $(document).on('focus', $element.selector, ->
         log 'focus'
         $textbox = $($element.selector)
-        log $element.length
-        $(document.body).after('<div id="library_select_div"></div>')
+        $(document.body).after("""<div id="library_select_div" selector="#{options.selector}"></div>""")
         offset = $textbox.offset()
         $('#library_select_div').css(
             'width' : parseFloat($textbox.css('width').split('px')[0])
@@ -83,25 +81,43 @@
         log 'blur'
         $('#library_select_div').remove()
     )
-    $(document).on('change keyup', $element.selector, ->
+    $(document).on('focus keyup', $element.selector, (event)->
         keyword = $($element.selector).val()
         log keyword
+        log event.keyCode
         if keyword==''
-          return
+          return $('#library_select_div').hide().empty()
+        else
+            $('#library_select_div').show()
         params =
-          'type'    : 'search'
-          'keyword' : keyword
-        log params
+            'type'    : 'search'
+            'keyword' : keyword
+            'limit'   : 10
         get_api(params, (data)=>
-            log data
             $('#library_select_div').empty()
+            style = ''
+            if options['font-size']
+                style='font-size:'+options['font-size']
             $(data).each((i, lib)->
-                $('#library_select_div').append("""<div id="#{lib.id}">#{lib.name}</div>""")
+                $('#library_select_div').append("""<div id="#{lib.id}" name="#{lib.name}" style="#{style}">#{lib.name} (#{lib.id})</div>""")
             )
         )
     )
     $(document).on('mousedown', '#library_select_div div', ->
-        func($(this).attr('id'))
+        # 一つのページに複数設置されたケースに対応
+        if $('#library_select_div').attr('selector')==options.selector
+            options.onselect($(this).attr('id'))
+            if options.label
+                $(options.label).text($(this).attr('name'))
     )
+    if options.keyword
+        params =
+          'type'    : 'search'
+          'keyword' : options.keyword
+        get_api(params, (data)=>
+            if data.length>0
+                if options.label
+                    $(options.label).text(data[0].name)
+        )
     return this
 )(jQuery)
