@@ -21,16 +21,20 @@
         <script>
         $(document).ready(function () {
             $.fn.editable.defaults.emptytext = '未記入';
-            $('#library_system_id').editable({type: 'text',pk:0});
+            $('#library_system_id').editable({type: 'text',pk:0, inputclass:'editable_textbox'});
+            $('#library_system_id2').editable({type: 'text',pk:0, inputclass:'editable_textbox2'});
         });
         $(function(){
-            $('#sample_textbox').librarysystempicker();
-            $('#sample_textbox2').librarysystempicker({
+            $('#sample_textbox').libraryselect();
+            $('#sample_textbox2').libraryselect({
                 'label' : '#sample_name',
             });
-            $('.editable-input input').librarysystempicker({
+            $('.editable_textbox').libraryselect({
                 'font-size' : '10px',
-                'keyword'   : 'Gifu_Nakatsugawa',
+            });
+            $('.editable_textbox2').libraryselect({
+                'font-size' : '10px',
+                'keyword'   : 'Kyoto_Kyoto',
                 'label'     : '#library_name',
                 'onselect'  : function(system_id){
                     $('.editable-input input').val(system_id)
@@ -47,7 +51,7 @@
                 <input type="text" name="sample_textbox" id="sample_textbox" class="form-control input-sm" />
             </div>
         </div>
-        <h3>textbox sample2</h3>
+        <h2>textbox sample2</h2>
         <div class="row">
             <div class="col-md-3">
                 <input type="text" name="sample_textbox2" id="sample_textbox2" class="form-control input-sm" />
@@ -56,7 +60,11 @@
         </div>
         <h2>X-editable Sample</h2>
         <p>
-            <a href="#" id="library_system_id" data-title="図書館を検索して選択して下さい。">Gifu_Nakatsugawa</a> <span id="library_name"></span>
+            <a href="#" id="library_system_id" data-title="図書館を検索して選択して下さい。">Gifu_Nakatsugawa</a>
+        </p>
+        <h2>X-editable Sample2</h2>
+        <p>
+            <a href="#" id="library_system_id2" data-title="図書館を検索して選択して下さい。">Kyoto_Kyoto</a> <span id="library_name"></span>
         </p>
     </body>
 </html>

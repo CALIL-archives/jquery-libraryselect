@@ -1,5 +1,5 @@
 (($) ->
-  $.fn.librarysystempicker = (options)->
+  $.fn.libraryselect = (options)->
     $element = this
     default_options = {
         'font-size': '12px'
