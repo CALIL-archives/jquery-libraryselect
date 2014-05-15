@@ -1,4 +1,4 @@
-jQuery Library System Picker
+jQuery Library Select
 ===========================
 
-カーリルの図書館システムIDを選択するjQueryプラグイン
+図書館選択を簡単にするjQueryプラグイン
