@@ -8,6 +8,7 @@
   "description": "It is a jQuery plug-in to simplify the library selection",
   "main": "./jquery-libraryselect.js",
   "keywords": [
+    "jquery",
     "library",
     "select"
   ],
