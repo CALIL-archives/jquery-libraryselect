@@ -2,7 +2,7 @@
 var bind_end, bind_move, bind_start, touchsupport;
 
 (function($) {}, touchsupport = window.ontouchstart != null, touchsupport ? (bind_start = 'touchstart', bind_move = 'touchmove', bind_end = 'touchend') : (bind_start = 'mousedown', bind_move = 'mousemove', bind_end = 'mouseup'), $.fn.libraryselect = function(options) {
-  var $element, add_css, default_options, get_api, log, params,
+  var $element, add_css, default_options, get_api, log, params, protocol,
     _this = this;
   $element = this;
   default_options = {
@@ -27,12 +27,11 @@ var bind_end, bind_move, bind_start, touchsupport;
     document.getElementsByTagName('head')[0].appendChild(newStyle);
     return newStyle.innerHTML = css_code;
   };
+  protocol = document.location.protocol === 'https:' ? 'https:' : 'http:';
   get_api = function(param, func) {
     var url,
       _this = this;
-    if ((param.type != null) && param.type === 'search') {
-      url = "//api.calil.jp/mobile/search";
-    }
+    url = protocol + "//api.calil.jp/mobile/search";
     return $.ajax({
       url: url,
       type: "GET",
@@ -73,9 +72,11 @@ var bind_end, bind_move, bind_start, touchsupport;
   $(document).on('focus keyup', $element.selector, function(event) {
     var keyword, params,
       _this = this;
+    if (!$element.selector) {
+      return;
+    }
     keyword = $($element.selector).val();
     log(keyword);
-    log(event.keyCode);
     if (keyword === '') {
       return $('#library_select_div').hide().empty();
     } else {
@@ -88,7 +89,6 @@ var bind_end, bind_move, bind_start, touchsupport;
     };
     return get_api(params, function(data) {
       var style;
-      log(data);
       $('#library_select_div').empty();
       style = '';
       if (options['font-size']) {

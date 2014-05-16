@@ -37,22 +37,22 @@ $.fn.libraryselect = (options)->
     #            idx = 0
         #追加
     #        css.insertRule(css_code, 0) #末尾に追加
-      # APIを叩く
-      get_api = (param, func)->
-        if param.type? and param.type=='search'
-          url = "//api.calil.jp/mobile/search"
+    # APIを取得
+    protocol = if document.location.protocol=='https:' then 'https:' else 'http:'
+    get_api = (param, func)->
+        url = protocol+"//api.calil.jp/mobile/search"
         $.ajax
-          url: url
-          type: "GET"
-          data: param
-          dataType: "jsonp"
-          timeout: 5000
-          error: ()->
-            log('読み込みに失敗しました。')
-          success: (data) =>
-            if param.type? and param.type=='group'
-              @add_groups(param.id, data)
-            func(data)
+            url: url
+            type: "GET"
+            data: param
+            dataType: "jsonp"
+            timeout: 5000
+            error: ()->
+                log('読み込みに失敗しました。')
+            success: (data) =>
+                if param.type? and param.type=='group'
+                    @add_groups(param.id, data)
+                func(data)
 
     add_css("""
 #library_select_div {
@@ -93,9 +93,11 @@ $.fn.libraryselect = (options)->
         $('#library_select_div').remove()
     )
     $(document).on('focus keyup', $element.selector, (event)->
+        if not $element.selector
+            return
         keyword = $($element.selector).val()
         log keyword
-        log event.keyCode
+        #log event.keyCode
         if keyword==''
             return $('#library_select_div').hide().empty()
         else
@@ -105,7 +107,6 @@ $.fn.libraryselect = (options)->
             'keyword' : keyword
             'limit'   : 10
         get_api(params, (data)=>
-            log data
             $('#library_select_div').empty()
             style = ''
             if options['font-size']
