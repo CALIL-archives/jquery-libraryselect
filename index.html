@@ -1,70 +1,256 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Library System Picker</title>
+	<head>
+		<title>jQuery Library Select</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<meta name="copyright" content="CALIL Inc." />
+
         <!-- jQuery -->
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <!-- Bootstrap3 -->
-        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
         <!-- X-editable -->
         <link href="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-        <script src="js/jquery-libraryselect.js"></script>
-        <style>
-            body {
-                padding : 10px 30px;
-            }
-        </style>
-        <script>
-        $(document).ready(function () {
-            $.fn.editable.defaults.emptytext = '未記入';
-            $('#library_system_id').editable({type: 'text',pk:0, inputclass:'editable_textbox'});
-            $('#library_system_id2').editable({type: 'text',pk:0, inputclass:'editable_textbox2'});
-        });
-        $(function(){
-            $('#sample_textbox').libraryselect();
-            $('#sample_textbox2').libraryselect({
-                'label' : '#sample_name',
-            });
-            $('.editable_textbox').libraryselect({
-                'font-size' : '10px',
-            });
-            $('.editable_textbox2').libraryselect({
-                'font-size' : '10px',
-                'keyword'   : 'Kyoto_Kyoto',
-                'label'     : '#library_name',
-                'onselect'  : function(system_id){
-                    $('.editable-input input').val(system_id)
-                }
-            });
-        });
-        </script>
-    </head>
-    <body>
-        <h1>Library System Picker</h1>
-        <h2>textbox sample</h2>
-        <div class="row">
-            <div class="col-md-3">
-                <input type="text" name="sample_textbox" id="sample_textbox" class="form-control input-sm" />
+        <!-- google-prettify -->
+		<link rel="stylesheet" href="css/prettify.css" type="text/css">
+        <script type="text/javascript" src="js/prettify.js"></script>
+        <!-- jQuery Library Select -->
+        <script src="js/jquery-libraryselect.js"></script>	</head>
+	<body>
+		<a href="https://github.com/CALIL/jquery-libraryselect"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="well well-sm" style="margin-top:12px;">
+                        <ul class="nav nav-list">
+                            <li><a href="#getting-started">Getting Started</a></li>
+                            <li><a href="#examples">Examples</a></li>
+                            <li><a href="#options">Options</a></li>
+                            <li><a href="#license">License</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="page-header">
+                        <h1>jQuery Library Select</h1>
+                    </div>
+                    
+                    <ul class="nav nav-pills">
+                        <li class="active"><a href="https://github.com/CALIL/jquery-libraryselect/archive/master.zip">Download</a></li>
+<!--                        <li><a href="index-2-3.html">Bootstrap 2.3 &amp; jQuery 2.1</a></li>-->
+                    </ul>
+                    <hr>
+                    
+                    <p class="lead">
+                        jQuery Library Select は、図書館選択を簡単にするjQueryプラグインです。 
+                    </p>
+                </div>
             </div>
-        </div>
-        <h2>textbox sample2</h2>
-        <div class="row">
-            <div class="col-md-3">
-                <input type="text" name="sample_textbox2" id="sample_textbox2" class="form-control input-sm" />
+
+            <div class="page-header">
+                <h1><a id="getting-started"></a>Getting Started</h1>
             </div>
-            <div class="col-md-3" id="sample_name" style="font-size:20px;"></div>
+            
+            <p>
+                以下のコードでまず始めてみましょう！
+            </p>
+
+            <pre class="prettyprint linenums">
+&lt;!-- Include Twitter Bootstrap and jQuery: --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js&quot;&gt;&lt;/script&gt;
+&lt;link href=&quot;http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;script src=&quot;http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- Include the plugin's JS: --&gt;
+&lt;script src=&quot;http://calil.github.io/jquery-libraryselect/js/jquery-libraryselect.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- Build your input: --&gt;
+&lt;input type=&quot;text&quot; name=&quot;libraryselect&quot; id=&quot;libraryselect&quot; class=&quot;form-control input-sm&quot; /&gt;
+
+&lt;!-- Initialize the plugin: --&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  $(document).ready(function() {
+    $('#libraryselect').libraryselect();
+  });
+&lt;/script&gt;</pre>
+            
+			<div class="page-header">
+				<h1><a id="examples"></a>Examples</h1>
+			</div>
+			
+			<script type="text/javascript">
+			    $(document).ready(function() {
+			        window.prettyPrint() && prettyPrint();
+			    });
+                $(document).ready(function () {
+                    $.fn.editable.defaults.emptytext = '未記入';
+                    $('#library_system_id').editable({type: 'text',pk:0, inputclass:'editable_textbox'});
+                    $('#library_system_id2').editable({type: 'text',pk:0, inputclass:'editable_textbox2'});
+                });
+                $(function(){
+                    $('#sample_textbox').libraryselect();
+                    $('#sample_textbox2').libraryselect({
+                        'label' : '#sample_name',
+                    });
+                    $('#sample_textbox2').libraryselect({
+                        'label'   : '#sample_name3',
+                        'keyword' : 'Gifu_Nakatsugawa'
+                    });
+                    $('.editable_textbox').libraryselect({
+                        'font-size' : '10px',
+                    });
+                    $('.editable_textbox2').libraryselect({
+                        'font-size' : '10px',
+                        'label'     : '#library_name',
+                        'keyword'   : 'Kyoto_Kyoto',
+                        'onselect'  : function(system_id){
+                            $('.editable_textbox2').val(system_id)
+                        }
+                    });
+                });
+			</script>
+			<table class="table table-striped">
+				<tr>
+					<td width="50%">
+						<input type="text" name="sample_textbox" id="sample_textbox" class="form-control input-sm" />
+					</td>
+					<td>
+						通常のテキストボックスです。テキストボックスにキーワードを入れると図書館の候補が表示されます。
+					</td>
+				</tr>
+			    <tr>
+			        <td>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" name="sample_textbox2" id="sample_textbox2" class="form-control input-sm" />
+                            </div>
+                            <div class="col-md-6" id="sample_name" style="font-size:20px;"></div>
+                        </div>
+			        </td>
+			        <td>
+			            選択した図書館の図書館名を指定された場所に表示します。
+			        </td>
+			    </tr>
+                <tr>
+			        <td>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" name="sample_textbox3" id="sample_textbox3" class="form-control input-sm" value="Gifu_Nakatugawa" />
+                            </div>
+                            <div class="col-md-6" id="sample_name3" style="font-size:20px;"></div>
+                        </div>
+			        </td>
+			        <td>
+			            ページのロード時にテキストボックスの図書館IDを元に図書館名を指定された場所に表示するサンプルです。
+			        </td>
+			    </tr>
+			    <tr>
+			        <td>
+			            <a href="#" id="library_system_id" data-title="図書館を検索して選択して下さい。">Gifu_Nakatsugawa</a>
+			        </td>
+			        <td>
+			            <a href="http://vitalets.github.io/x-editable/" target="_blank">X-editable</a>を使ったサンプルです。
+			        </td>
+			    </tr>
+                       <tr>
+					<td>
+						<a href="#" id="library_system_id2" data-title="図書館を検索して選択して下さい。">Kyoto_Kyoto</a> <span id="library_name"></span>
+					</td>
+					<td>
+						<a href="http://vitalets.github.io/x-editable/" target="_blank">X-editable</a>で、選択した図書館の図書館名を指定された場所に表示するサンプルです。
+					</td>
+				</tr>
+			</table>
+
+            <div class="page-header">
+				<h1><a id="options"></a>Options</h1>
+			</div>
+            
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>オプション</th>
+						<th>説明</th>
+						<th>使い方</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>font-size</code></td>
+						<td>図書館候補のフォントサイズを指定します。</td>
+						<td>
+							<pre class="prettyprint linenums">
+&lt;script type=&quot;text/javascript&quot;&gt;
+  $(document).ready(function() {
+    $('#libraryselect').libraryselect({
+      'font-size' : '16px'
+    });
+  });
+&lt;/script&gt;
+							</pre>
+						</td>
+					</tr>
+					<tr>
+						<td><code>label</code></td>
+						<td>選択された図書館の図書館名を表示する場所のCSSセレクターを記述します。</td>
+						<td>
+							<pre class="prettyprint linenums">
+&lt;script type=&quot;text/javascript&quot;&gt;
+  $(document).ready(function() {
+    $('#libraryselect').libraryselect({
+      'label' : '#sample_label'
+    });
+  });
+&lt;/script&gt;
+							</pre>
+						</td>
+					</tr>
+                    <tr>
+						<td><code>keyword</code></td>
+						<td>既定値がある場合、このパラメーターにセットするとページのロード時に既定値を元に<code>label</code>で指定された場所に図書館名を挿入します。</td>
+						<td>
+							<pre class="prettyprint linenums">
+&lt;script type=&quot;text/javascript&quot;&gt;
+  $(document).ready(function() {
+    $('#libraryselect').libraryselect({
+      'label'   : '#sample_label',
+      'keyword' : 'Gifu_Nakatsugawa'
+    });
+  });
+&lt;/script&gt;
+							</pre>
+						</td>
+					</tr>
+					<tr>
+						<td><code>onselect</code></td>
+						<td>図書館が選ばれた時に呼ばれる関数です。<br>引数にsystem_idを渡します。デフォルトでは、テキストボックスにsystem_idを入れます。</td>
+						<td>
+							<pre class="prettyprint linenums">
+&lt;script type=&quot;text/javascript&quot;&gt;
+  $(document).ready(function() {
+    $('#libraryselect').libraryselect({
+      'onselect' : function(system_id){
+        $('.libraryselect').val(system_id)
+      }
+    });
+  });
+&lt;/script&gt;
+							</pre>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+        <div class="page-header">
+            <h1><a id="license"></a>License</h1>
         </div>
-        <h2>X-editable Sample</h2>
-        <p>
-            <a href="#" id="library_system_id" data-title="図書館を検索して選択して下さい。">Gifu_Nakatsugawa</a>
-        </p>
-        <h2>X-editable Sample2</h2>
-        <p>
-            <a href="#" id="library_system_id2" data-title="図書館を検索して選択して下さい。">Kyoto_Kyoto</a> <span id="library_name"></span>
-        </p>
-    </body>
+		<div class="container">
+			<p>
+				&copy; 2014
+				<a href="https://calil.jp">CALIL Inc.</a> - This software is released under <a href="https://github.com/CALIL/jquery-libraryselect/blob/master/LICENSE">the MIT License</a>.
+			</p>
+		</div>
+	</body>
 </html>
