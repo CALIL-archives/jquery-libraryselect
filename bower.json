@@ -1,6 +1,6 @@
 {
   "name": "jquery-libraryselect",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/CALIL/jquery-libraryselect",
   "authors": [
     "Satoshi Deguchi <deguchi@calil.jp>"
@@ -13,10 +13,10 @@
   ],
   "license": "MIT",
   "ignore": [
-    "**/.*",
     "README.md",
-    "LICENSE",
-    "index.html"
+    "index.html",
+    "prettify/",
+    "jquery-libraryselect.coffee"
   ],
   "dependencies": {
     "jquery": "~2.1.1"
