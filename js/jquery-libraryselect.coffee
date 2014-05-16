@@ -1,15 +1,16 @@
 (($) ->
-  touchsupport = window.ontouchstart? #タッチイベントの切り替え判定
-  if touchsupport
+
+touchsupport = window.ontouchstart? #タッチイベントの切り替え判定
+if touchsupport
     bind_start = 'touchstart'
     bind_move  = 'touchmove'
     bind_end   = 'touchend'
-  else
+else
     bind_start = 'mousedown'
     bind_move  = 'mousemove'
     bind_end   = 'mouseup'
 
-  $.fn.libraryselect = (options)->
+$.fn.libraryselect = (options)->
     $element = this
     default_options = {
         'font-size': '12px'
@@ -29,13 +30,13 @@
         newStyle.type = "text/css"
         document.getElementsByTagName('head')[0].appendChild(newStyle)
         newStyle.innerHTML = css_code
-#        css = document.styleSheets[0]
-#        if document.styleSheets[0].cssRules
-#            idx = document.styleSheets[0].cssRules.length
-#        else
-#            idx = 0
+    #        css = document.styleSheets[0]
+    #        if document.styleSheets[0].cssRules
+    #            idx = document.styleSheets[0].cssRules.length
+    #        else
+    #            idx = 0
         #追加
-#        css.insertRule(css_code, 0) #末尾に追加
+    #        css.insertRule(css_code, 0) #末尾に追加
       # APIを叩く
       get_api = (param, func)->
         if param.type? and param.type=='search'
@@ -72,7 +73,7 @@
 #library_select_div div:hover {
     background-color: #CCC;
 }
-""")
+    """)
     $(document).on('focus', $element.selector, ->
         log 'focus'
         $textbox = $($element.selector)
@@ -96,7 +97,7 @@
         log keyword
         log event.keyCode
         if keyword==''
-          return $('#library_select_div').hide().empty()
+            return $('#library_select_div').hide().empty()
         else
             $('#library_select_div').show()
         params =
@@ -104,6 +105,7 @@
             'keyword' : keyword
             'limit'   : 10
         get_api(params, (data)=>
+            log data
             $('#library_select_div').empty()
             style = ''
             if options['font-size']
