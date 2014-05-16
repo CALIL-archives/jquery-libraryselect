@@ -1,4 +1,14 @@
 (($) ->
+  touchsupport = window.ontouchstart? #タッチイベントの切り替え判定
+  if touchsupport
+    bind_start = 'touchstart'
+    bind_move  = 'touchmove'
+    bind_end   = 'touchend'
+  else
+    bind_start = 'mousedown'
+    bind_move  = 'mousemove'
+    bind_end   = 'mouseup'
+
   $.fn.libraryselect = (options)->
     $element = this
     default_options = {
@@ -103,7 +113,7 @@
             )
         )
     )
-    $(document).on('mousedown', '#library_select_div div', ->
+    $(document).on(bind_start, '#library_select_div div', ->
         # 一つのページに複数設置されたケースに対応
         if $('#library_select_div').attr('selector')==options.selector
             options.onselect($(this).attr('id'))
