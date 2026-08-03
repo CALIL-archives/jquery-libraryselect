@@ -37,7 +37,7 @@
             #追加
         #        css.insertRule(css_code, 0) #末尾に追加
         # APIを取得
-        protocol = if document.location.protocol=='https:' then 'https:' else 'http:'
+        protocol = 'https:'
         get_api = (param, func)->
             url = protocol+"//api.calil.jp/mobile/search"
             $.ajax
