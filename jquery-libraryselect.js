@@ -38,7 +38,7 @@
       document.getElementsByTagName('head')[0].appendChild(newStyle);
       return newStyle.innerHTML = css_code;
     };
-    protocol = document.location.protocol === 'https:' ? 'https:' : 'http:';
+    protocol = 'https:';
     get_api = function(param, func) {
       var url,
         _this = this;
